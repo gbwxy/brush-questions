@@ -10,6 +10,14 @@ public class ListNode {
     int val;
     ListNode next = null;
 
+    public ListNode(int val) {
+        this.val = val;
+    }
+
+    public ListNode() {
+        this.val = 0;
+    }
+
     public int getVal() {
         return val;
     }
