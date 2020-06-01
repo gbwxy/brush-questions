@@ -1,5 +1,7 @@
 package newcoder;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -72,4 +74,41 @@ public class DynamicProgram {
         return flag[s.length()];
     }
 
+
+    /**
+     * 题目描述
+     * 给定一个字符串s和一组单词dict，在s中添加空格将s变成一个句子，使得句子中的每一个单词都是dict中的单词
+     * 返回所有可能的结果
+     * 例如：给定的字符串s ="catsanddog",
+     * dict =["cat", "cats", "and", "sand", "dog"].
+     * <p>
+     * 返回的结果为["cats and dog", "cat sand dog"].
+     */
+    public ArrayList<String> wordBreak2(String s, Set<String> dict) {
+        /*
+         * 动态规划思想，用map把已经求得的结果存起来，避免重复劳动
+         */
+        return DFS(s, dict, new HashMap<String, ArrayList<String>>());
+
+    }
+
+    private ArrayList<String> DFS(String s, Set<String> wordDict, HashMap<String, ArrayList<String>> map) {
+        if (map.containsKey(s))
+            return map.get(s);
+        ArrayList<String> res = new ArrayList<String>();
+        if (s.length() == 0) {
+            res.add("");
+            return res;
+        }
+        for (String subStr : wordDict) {
+            if (s.startsWith(subStr)) {
+                for (String str : DFS(s.substring(subStr.length()), wordDict, map)) {
+                    res.add(subStr + (str == "" ? "" : " ") + str);
+                }
+            }
+        }
+        map.put(s, res);
+        return res;
+
+    }
 }
