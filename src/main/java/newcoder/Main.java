@@ -1,12 +1,30 @@
 package newcoder;
 
-import newcoder.entity.ArrayQueue;
-import newcoder.entity.ListNode;
-import newcoder.entity.MyLinkedList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Main {
 
     public static void main(String[] args) {
+
+        /**
+         *  word break
+         */
+        //"aaaaaaa",["aaaa","aaa"]
+        String s = "aaaaaaa";
+        Set<String> dict = new HashSet<>();
+        dict.add("aaaa");
+        dict.add("aaa");
+        System.out.println(DynamicProgram.wordBreak(s, dict));
+
+
+        /**
+         * 计算逆波兰式（后缀表达式）的值
+         */
+//        //["0","3","/"]
+//        String[] tokens = new String[]{"0", "3", "/"};
+//        StackOpt.evalRPN(tokens);
+
 
         //  4,3,[1,2,3,4],[2,2,4]
         //System.out.println(water.solve(4, 3, new int[]{1, 2, 3, 4}, new int[]{2, 2, 4}));
@@ -30,8 +48,6 @@ public class Main {
 //            System.out.println(resNode.getVal());
 //            resNode = resNode.getNext();
 //        }
-
-
 
 
     }
