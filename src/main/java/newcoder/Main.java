@@ -11,14 +11,29 @@ public class Main {
         //  4,3,[1,2,3,4],[2,2,4]
         //System.out.println(water.solve(4, 3, new int[]{1, 2, 3, 4}, new int[]{2, 2, 4}));
 
-        MyLinkedList linkedList = new MyLinkedList();
-        linkedList.appent(8);
-        ListNode resNode = SingleListNodeSort.sortList(linkedList.getHead());
+        /**
+         * 单链表排序
+         */
+//        MyLinkedList linkedList = new MyLinkedList();
+//        linkedList.appent(8);
+//        linkedList.appent(2);
+//        linkedList.appent(5);
+//        linkedList.appent(81);
+//        linkedList.appent(18);
+//        linkedList.appent(52);
+//        linkedList.appent(33);
+//        linkedList.appent(24);
+//        linkedList.appent(66);
+//        ListNode resNode = SingleListNodeSort.sortList(linkedList.getHead());
+//
+//        while (resNode != null) {
+//            System.out.println(resNode.getVal());
+//            resNode = resNode.getNext();
+//        }
 
-        while (resNode != null) {
-            System.out.println(resNode.getVal());
-            resNode = resNode.getNext();
-        }
+
+
+
     }
 
 /**
