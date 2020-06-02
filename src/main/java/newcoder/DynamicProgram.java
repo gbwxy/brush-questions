@@ -1,7 +1,5 @@
 package newcoder;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -20,95 +18,27 @@ public class DynamicProgram {
      * @param dict
      * @return
      */
-//    public static boolean wordBreak(String s, Set<String> dict) {
-//
-//        Iterator<String> iterator = dict.iterator();
-//
-//        while (iterator.hasNext()) {
-//            String str = iterator.next();
-//            int idx = s.indexOf(str);
-//            int len = str.length();
-//            while (idx != -1) {
-//                //s = s.substring(idx, idx + len);
-////                if (idx + len >= s.length()) {
-////                    s = s.substring(0, idx);
-////                } else if (idx == 0) {
-////                    s = s.substring(idx + len, s.length());
-////                } else {
-////                    s = s.substring(0, idx) + s.substring(idx + len);
-////                }
-//                s = s.substring(0, idx) + s.substring(idx + len);
-//                idx = s.indexOf(str);
-//            }
-//        }
-//
-//        return s.length() == 0;
-//    }
+    public static boolean wordBreak(String s, Set<String> dict) {
 
-    /**
-     * 动态规划
-     * 基本思想是将待求解问题分解成若干个子问题，先求解子问题，然后从这些子问题的解得到原问题的解（类似--分治法）
-     * 经分解得到子问题往往不是互相独立的
-     * 不管该子问题以后是否被用到，只要它被计算过，就将其结果填入表中。这就是动态规划法的基本思路
-     *
-     * @param s
-     * @param dict
-     * @return
-     */
-    public boolean wordBreak(String s, Set<String> dict) {
-        if (s == null || s.length() == 0 || dict == null || dict.size() == 0) {
-            return false;
-        }
-        boolean[] flag = new boolean[s.length() + 1];
-        flag[0] = true;
-        for (int i = 1; i <= s.length(); i++) {
-            for (int j = i - 1; j >= 0; j--) {
-                if (flag[j] && dict.contains(s.substring(j, i))) {
-                    flag[i] = true;
+
+        int[] idxs = new int[s.length() + 1];
+        idxs[0] = 1;
+
+        for (int ii = 1; ii <= s.length(); ii++) {
+            for (int jj = ii - 1; jj >= 0; jj--) {
+                if (idxs[jj] == 1 && dict.contains(s.substring(jj, ii))) {
+                    // jj--(ii-1) 这个区间的单词在dict中
+                    // 下一次截取从ii开始，所以设置idxs[ii] = 1
+                    idxs[ii] = 1;
+                    //只要改点匹配一个就可以
                     break;
-                } else {
-                    flag[i] = false;
                 }
+
             }
         }
-        return flag[s.length()];
+        //idxs[s.length()]之前都已经被截取并匹配
+        return idxs[s.length()] == 1;
     }
 
 
-    /**
-     * 题目描述
-     * 给定一个字符串s和一组单词dict，在s中添加空格将s变成一个句子，使得句子中的每一个单词都是dict中的单词
-     * 返回所有可能的结果
-     * 例如：给定的字符串s ="catsanddog",
-     * dict =["cat", "cats", "and", "sand", "dog"].
-     * <p>
-     * 返回的结果为["cats and dog", "cat sand dog"].
-     */
-    public ArrayList<String> wordBreak2(String s, Set<String> dict) {
-        /*
-         * 动态规划思想，用map把已经求得的结果存起来，避免重复劳动
-         */
-        return DFS(s, dict, new HashMap<String, ArrayList<String>>());
-
-    }
-
-    private ArrayList<String> DFS(String s, Set<String> wordDict, HashMap<String, ArrayList<String>> map) {
-        if (map.containsKey(s))
-            return map.get(s);
-        ArrayList<String> res = new ArrayList<String>();
-        if (s.length() == 0) {
-            res.add("");
-            return res;
-        }
-        for (String subStr : wordDict) {
-            if (s.startsWith(subStr)) {
-                for (String str : DFS(s.substring(subStr.length()), wordDict, map)) {
-                    res.add(subStr + (str == "" ? "" : " ") + str);
-                }
-            }
-        }
-        map.put(s, res);
-        return res;
-
-    }
 }

@@ -2,7 +2,7 @@ package newcoder;
 
 import java.util.Arrays;
 
-public class water {
+public class Water {
 
     /**
      * 题目描述
@@ -71,7 +71,7 @@ public class water {
                     }
                     result[ii] = min;
                     for (int jj = idx; jj > idx - sumNum + 1; jj--) {
-                        cha[jj] =0;
+                        cha[jj] = 0;
                     }
                     zeroCount = sumNum;
                 }

@@ -7,15 +7,35 @@ public class Main {
 
     public static void main(String[] args) {
 
+
+//        int[] nums = new int[]{2, 1};
+//        int candy = Candy.candy(nums);
+//        System.out.println(candy);
+
+
+//        dict =["cat", "cats", "and", "sand", "dog"]
+        String s = "catsanddog";
+        Set<String> dict = new HashSet<>();
+        dict.add("cat");
+        dict.add("cats");
+        dict.add("and");
+        dict.add("sand");
+        dict.add("dog");
+        System.out.println(DynameicProgram2.wordBreak(s, dict));
+
         /**
          *  word break
          */
         //"aaaaaaa",["aaaa","aaa"]
-        String s = "aaaaaaa";
-        Set<String> dict = new HashSet<>();
-        dict.add("aaaa");
-        dict.add("aaa");
-        System.out.println(DynamicProgram.wordBreak(s, dict));
+//        String s = "aaaaaaa";
+//        Set<String> dict = new HashSet<>();
+//        dict.add("aaaa");
+//        dict.add("aaa");
+//        String s = "leetcode";
+//        Set<String> dict = new HashSet<>();
+//        dict.add("leet");
+//        dict.add("code");
+//        System.out.println(DynamicProgram.wordBreak(s, dict));
 
 
         /**
@@ -27,7 +47,7 @@ public class Main {
 
 
         //  4,3,[1,2,3,4],[2,2,4]
-        //System.out.println(water.solve(4, 3, new int[]{1, 2, 3, 4}, new int[]{2, 2, 4}));
+        //System.out.println(Water.solve(4, 3, new int[]{1, 2, 3, 4}, new int[]{2, 2, 4}));
 
         /**
          * 单链表排序
