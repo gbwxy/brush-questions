@@ -18,58 +18,27 @@ public class DynamicProgram {
      * @param dict
      * @return
      */
-//    public static boolean wordBreak(String s, Set<String> dict) {
-//
-//        Iterator<String> iterator = dict.iterator();
-//
-//        while (iterator.hasNext()) {
-//            String str = iterator.next();
-//            int idx = s.indexOf(str);
-//            int len = str.length();
-//            while (idx != -1) {
-//                //s = s.substring(idx, idx + len);
-////                if (idx + len >= s.length()) {
-////                    s = s.substring(0, idx);
-////                } else if (idx == 0) {
-////                    s = s.substring(idx + len, s.length());
-////                } else {
-////                    s = s.substring(0, idx) + s.substring(idx + len);
-////                }
-//                s = s.substring(0, idx) + s.substring(idx + len);
-//                idx = s.indexOf(str);
-//            }
-//        }
-//
-//        return s.length() == 0;
-//    }
+    public static boolean wordBreak(String s, Set<String> dict) {
 
-    /**
-     * 动态规划
-     * 基本思想是将待求解问题分解成若干个子问题，先求解子问题，然后从这些子问题的解得到原问题的解（类似--分治法）
-     * 经分解得到子问题往往不是互相独立的
-     * 不管该子问题以后是否被用到，只要它被计算过，就将其结果填入表中。这就是动态规划法的基本思路
-     *
-     * @param s
-     * @param dict
-     * @return
-     */
-    public boolean wordBreak(String s, Set<String> dict) {
-        if (s == null || s.length() == 0 || dict == null || dict.size() == 0) {
-            return false;
-        }
-        boolean[] flag = new boolean[s.length() + 1];
-        flag[0] = true;
-        for (int i = 1; i <= s.length(); i++) {
-            for (int j = i - 1; j >= 0; j--) {
-                if (flag[j] && dict.contains(s.substring(j, i))) {
-                    flag[i] = true;
+
+        int[] idxs = new int[s.length() + 1];
+        idxs[0] = 1;
+
+        for (int ii = 1; ii <= s.length(); ii++) {
+            for (int jj = ii - 1; jj >= 0; jj--) {
+                if (idxs[jj] == 1 && dict.contains(s.substring(jj, ii))) {
+                    // jj--(ii-1) 这个区间的单词在dict中
+                    // 下一次截取从ii开始，所以设置idxs[ii] = 1
+                    idxs[ii] = 1;
+                    //只要改点匹配一个就可以
                     break;
-                } else {
-                    flag[i] = false;
                 }
+
             }
         }
-        return flag[s.length()];
+        //idxs[s.length()]之前都已经被截取并匹配
+        return idxs[s.length()] == 1;
     }
+
 
 }
