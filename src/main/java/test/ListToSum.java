@@ -36,10 +36,10 @@ import java.util.concurrent.ExecutionException;
 //    * 输出
 //        * 3
 // */
-public class trans {
+public class ListToSum {
 
     /**
-     * 此方法复杂度过高
+     * 此方法复杂度过高-超时
      *
      * @param args
      */
@@ -65,40 +65,30 @@ public class trans {
 //
 //        scanner.close();
 //    }
+
+
+    /**
+     * 把数组遍历问题 -- 优化为 --  求和问题
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int n = Integer.valueOf(scanner.nextLine());
-        Map<Integer, Integer> map = new ConcurrentHashMap<>();
-        List<CompletableFuture> futures = new ArrayList<>();
+        int[] nums = new int[100000 + 1];
+        Map<Integer, Integer> map = new HashMap<>();
         for (int ii = 0; ii < n; ii++) {
             int x = scanner.nextInt();
             int y = scanner.nextInt();
-
-            CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
-                for (int jj = x; jj < y; jj++) {
-                    int count = map.getOrDefault(jj, 0) == 0 ? 1 : map.get(jj) + 1;
-                    map.put(jj, count);
-                }
-            });
-            futures.add(future);
-
-
+            nums[x]++;
+            nums[y]--;
         }
 
-        futures.forEach(future -> {
-            try {
-                future.get();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
-        });
-
-
         int max = 0;
-        for (int value : map.values()) {
-            max = Math.max(max, value);
+        int[] total = new int[100000 + 1];
+        for (int ii = 1; ii < nums.length; ii++) {
+            total[ii] = total[ii - 1] + nums[ii];
+            max = Math.max(total[ii], max);
         }
 
         System.out.println(max);
