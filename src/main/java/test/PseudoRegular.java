@@ -19,62 +19,163 @@ import java.util.Arrays;
  */
 public class PseudoRegular {
 
+    /**
+     * 场景考虑不全面
+     */
+//    private static final String Letter = "1234567890";
+//    private static final String Letterm = "1234567890*";
+//    public static void main(String[] args) {
+//        // System.arraycopy(original, 0, destination, length);
+//        // Arrays.copyOf(original, newLength);
+//        Scanner in = new Scanner(System.in);
+//        while (in.hasNextInt()) {//注意while处理多个case
+//            int n = Integer.valueOf(in.nextLine());
+//            for (int ii = 0; ii < n; ii++) {
+//                String m = in.nextLine();
+//                String s = in.nextLine();
+//                if (s == null || s.length() == 0) {
+//                    System.out.println("NO");
+//                } else {
+//                    boolean isMatch = true;
+//                    int sum = 0;
+//                    boolean isStart = false;
+//                    int mIdx = 0;
+//                    boolean mMatch = false;
+//                    for (int jj = 0; jj < s.length(); jj++) {
+//                        char sc = s.charAt(jj);
+//                        if (Letter.indexOf(sc) == -1) {
+//                            isMatch = false;
+//                            break;
+//                        }
+//                        if (mIdx >= m.length()) {
+//                            isMatch = false;
+//                            break;
+//                        }
+//                        char mc = m.charAt(mIdx);
+//                        if (Letterm.indexOf(mc) == -1) {
+//                            isMatch = false;
+//                            break;
+//                        }
+//                        if (!isStart && mc == '*') {
+//                            mIdx++;
+//                            mMatch = false;
+//                            continue;
+//                        } else {
+//                            if (mc != '*') {
+//                                if (!isStart) {
+//                                    isStart = true;
+//                                }
+//                                if (mc != sc) {
+//                                    isMatch = false;
+//                                    break;
+//                                }
+//                                sum += Integer.valueOf(String.valueOf(mc));
+//                                mIdx++;
+//                                mMatch = false;
+//                            } else {
+//                                int mI = sum % 10;
+//                                //场景要考虑全面-多写几个测试用例
+//                                if (mI != Integer.valueOf(String.valueOf(sc))) {
+//                                    if (mMatch && mIdx < m.length() - 1) {
+//                                        mIdx++;
+//                                        mMatch = false;
+//                                        mc = m.charAt(mIdx);
+//                                        if (mc != sc) {
+//                                            isMatch = false;
+//                                            break;
+//                                        } else {
+//                                            mIdx++;
+//                                            continue;
+//                                        }
+//                                    } else {
+//                                        isMatch = false;
+//                                        break;
+//                                    }
+//                                } else {
+//                                    mMatch = true;
+//                                }
+//                            }
+//                        }
+//                    }
+//                    if (mIdx < m.length() - 1) {
+//                        isMatch = false;
+//                    }
+//                    if (isMatch) {
+//                        System.out.println("YES");
+//                    } else {
+//                        System.out.println("NO");
+//                    }
+//                }
+//            }
+//            in.nextLine();
+//        }
+//        in.close();
+//    }
+
+
+    /**
+     * 遍历m
+     */
+
+    private static final String Letter = "1234567890";
+    private static final String Letterm = "1234567890*";
+
     public static void main(String[] args) {
-        // System.arraycopy(original, 0, destination, length);
-        // Arrays.copyOf(original, newLength);
         Scanner in = new Scanner(System.in);
-        while (in.hasNextInt()) {//注意while处理多个case
+        while (in.hasNextInt()) {
             int n = Integer.valueOf(in.nextLine());
             for (int ii = 0; ii < n; ii++) {
                 String m = in.nextLine();
                 String s = in.nextLine();
+
                 if (s == null || s.length() == 0) {
                     System.out.println("NO");
                 } else {
+
+                    boolean isStart = false;
                     boolean isMatch = true;
                     int sum = 0;
-                    boolean isStart = false;
                     int mIdx = 0;
-                    for (int jj = 0; jj < s.length(); jj++) {
-                        char sc = s.charAt(jj);
-                        if (mIdx >= m.length()) {
+                    int sIdx = 0;
+                    while (mIdx < m.length() && sIdx < s.length()) {
+                        char mc = m.charAt(mIdx);
+                        if (Letterm.indexOf(mc) == -1) {
                             isMatch = false;
                             break;
                         }
-                        char mc = m.charAt(mIdx);
+                        char sc = s.charAt(sIdx);
+                        if (Letter.indexOf(sc) == -1) {
+                            isMatch = false;
+                            break;
+                        }
                         if (!isStart && mc == '*') {
                             mIdx++;
+                            sIdx++;
                             continue;
                         } else {
                             if (mc != '*') {
-                                if (!isStart) {
-                                    isStart = true;
-                                }
-                                if (mc != sc) {
+                                isStart = true;
+                                if (sc == mc) {
+                                    sum += Integer.valueOf(mc);
+                                    mIdx++;
+                                    sIdx++;
+                                    continue;
+                                } else {
                                     isMatch = false;
                                     break;
                                 }
-                                sum += Integer.valueOf(String.valueOf(mc));
-                                mIdx++;
-                            }
-                            if (mc == '*') {
-                                int mI = sum % 10;
-                                if (mI != Integer.valueOf(String.valueOf(sc))) {
-                                    isMatch = false;
-                                    break;
-                                }
+                            } else {
+                                isMatch = isMatch(mIdx, sIdx, m, s, sum % 10);
+                                mIdx = m.length();
+                                sIdx = s.length();
                             }
                         }
                     }
-                    if (mIdx < m.length() - 1) {
-//                        for (int kk = mIdx + 1; kk < m.length() - 1; kk++) {
-//                            if (m.charAt(kk) != '*') {
-//                                isMatch = false;
-//                                break;
-//                            }
-//                        }
+
+                    if (mIdx != m.length() || sIdx != s.length()) {
                         isMatch = false;
                     }
+
                     if (isMatch) {
                         System.out.println("YES");
                     } else {
@@ -85,6 +186,49 @@ public class PseudoRegular {
             in.nextLine();
         }
         in.close();
+    }
+
+    private static boolean isMatch(int mIdx, int sIdx, String m, String s, int mNum) {
+
+        if (m.length() - mIdx > s.length() - sIdx) {
+            return false;
+        } else if (m.length() - 1 == mIdx) {
+            while (sIdx < s.length()) {
+                if (Integer.valueOf(s.charAt(sIdx)) != mNum) {
+                    return false;
+                }
+                sIdx++;
+            }
+            return true;
+        } else {
+            int ii = s.length() - 1;
+            int jj = m.length() - 1;
+            while (ii >= sIdx && jj >= mIdx) {
+                char mc, sc;
+                mc = m.charAt(jj);
+                sc = s.charAt(ii);
+                if (mc == '*') {
+                    if (Integer.valueOf(sc) != mNum) {
+                        return false;
+                    } else {
+                        ii--;
+                        continue;
+                    }
+                } else {
+                    if (sc != mc) {
+                        return false;
+                    } else {
+                        ii--;
+                        jj--;
+                        continue;
+                    }
+                }
+            }
+            if (ii > sIdx || jj > mIdx) {
+                return false;
+            }
+            return true;
+        }
     }
 
 }
@@ -145,3 +289,27 @@ public class PseudoRegular {
 //     * case 2：21*是正则表达式，2103是数字串，*前面所有数字的和值除以10的余数为3，刚好“03”并不符合匹配规则，所以，输出NO。
 //     * case 3：22*是正则表达式，22*是数字串，但是因为其中包含了*这样的非数字字符，并不符合匹配规则，所以，输出NO。
 // */
+
+
+//  用例3:
+//        5
+//        1*b
+//        1*b
+//        21*2
+//        21332
+//        21*2
+//        2122
+//        *
+//        100
+//        *00
+//        100
+//        0
+//
+//  对应输出应该为:
+//
+//        NO
+//        YES
+//        NO
+//        NO
+//        YES
+//
