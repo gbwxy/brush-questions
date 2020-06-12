@@ -35,28 +35,75 @@ import java.util.Scanner;
 public class Shopee {
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        while (scanner.hasNext()) {
-            int n = scanner.nextInt();
-            int m = scanner.nextInt();
-            int[] nums = new int[n];
-            for (int ii = 0; ii < n; ii++) {
-                nums[ii] = scanner.nextInt();
-            }
-
-            if (m == 1) {
-                System.out.println(Arrays.stream(nums).sum());
-            } else if (m >= n) {
-                Arrays.sort(nums);
-                System.out.println(nums[m - 1]);
-            } else {
-
-
-            }
-        }
-
-
+        System.out.println(Integer.MIN_VALUE);
+        System.out.printf("%d  0x%x", Integer.MIN_VALUE, Integer.MIN_VALUE);
     }
+
+//    public static void main(String[] args) {
+//        Scanner scanner = new Scanner(System.in);
+//        while (scanner.hasNext()) {
+//            int n = scanner.nextInt();
+//            int m = scanner.nextInt();
+//            int[] nums = new int[n];
+//            for (int ii = 0; ii < n; ii++) {
+//                nums[ii] = scanner.nextInt();
+//            }
+//
+//            if (m == 1) {
+//                System.out.println(Arrays.stream(nums).sum());
+//            } else if (m >= n) {
+//                Arrays.sort(nums);
+//                System.out.println(nums[m - 1]);
+//            } else {
+//
+//                for (int ii = 0; ii < n; ii++) {
+//                    for (int jj = 0; jj < ii && jj < m; jj++) {
+//                        getMax(nums, 0, ii, jj);
+//
+////                        getMax(nums, ii)
+//
+//                    }
+//                }
+//
+//
+//            }
+//
+////            Integer.MIN_VALUE
+//        }
+//
+//
+//    }
+//
+//
+//    private static int getMax(int[] nums, int start, int end, int m) {
+//
+//        if (start == end - 1 && m == 1) {
+//            return nums[start];
+//        }
+//
+//        int[] currentNum = new int[nums.length];
+//        for (int kk = 0; kk < nums.length; kk++) {
+//            currentNum[kk] = nums[kk];
+//        }
+//        int max = currentNum[start];
+//        if (m == 1) {
+//            int sum = 0;
+//            for (int jj = 0; jj < end; jj++) {
+//                sum = sum + nums[jj];
+//            }
+//            return Math.max(max, sum);
+//        } else {
+//            int tmp = currentNum[start];
+//            int min = 0;
+//            for (int ii = start + 1; ii < end; ii++) {
+//                max = currentNum[ii];
+//                currentNum[ii] = tmp;
+//                max = Math.max(max, getMax(currentNum, ii, end, m - 1));
+//                min = Math.min(min, max);
+//            }
+//            return min;
+//        }
+//    }
 
 
 }
