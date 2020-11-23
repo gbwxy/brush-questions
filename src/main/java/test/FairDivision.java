@@ -1,5 +1,7 @@
 package test;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Scanner;
 
 public class FairDivision {
@@ -15,12 +17,16 @@ public class FairDivision {
                 nums[idx] = scanner.nextInt();
             }
 
-            for(int ii = 0;ii<totalNum;ii++){
+            for (int ii = 0; ii < totalNum; ii++) {
 
             }
 
 
         }
+
+
+        HashSet set = new HashSet();
+        HashMap map = new HashMap();
 
         scanner.close();
     }
